@@ -14,17 +14,22 @@
  * limitations under the License.
  */
 
-#pragma once
+package {
+    // See: http://go/android-license-faq
+    // A large-scale-change added 'default_applicable_licenses' to import
+    // all of the 'license_kinds' from "hardware_interfaces_license"
+    // to get the below license kinds:
+    //   SPDX-license-identifier-Apache-2.0
+    default_applicable_licenses: ["hardware_interfaces_license"],
+}
 
-#include <aidl/android/media/audio/common/AudioChannelLayout.h>
-#include <aidl/android/media/audio/common/AudioFormatDescription.h>
+apex_key {
+    name: "com.android.hardware.key",
+    public_key: "com.android.hardware.avbpubkey",
+    private_key: "com.android.hardware.pem",
+}
 
-using aidl::android::media::audio::common::AudioChannelLayout;
-
-namespace aidl::android::hardware::audio::core::r_submix {
-
-bool isChannelMaskSupported(const AudioChannelLayout& channelMask);
-
-bool isSampleRateSupported(int sampleRate);
-
-}  // namespace aidl::android::hardware::audio::core::r_submix
+android_app_certificate {
+    name: "com.android.hardware.certificate",
+    certificate: "com.android.hardware",
+}
