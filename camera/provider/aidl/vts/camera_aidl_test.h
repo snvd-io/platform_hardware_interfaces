@@ -64,6 +64,7 @@ using ::aidl::android::hardware::camera::device::BufferRequest;
 using ::aidl::android::hardware::camera::device::BufferRequestStatus;
 using ::aidl::android::hardware::camera::device::CameraMetadata;
 using ::aidl::android::hardware::camera::device::CaptureResult;
+using ::aidl::android::hardware::camera::device::ConfigureStreamsRet;
 using ::aidl::android::hardware::camera::device::ErrorCode;
 using ::aidl::android::hardware::camera::device::HalStream;
 using ::aidl::android::hardware::camera::device::ICameraDevice;
@@ -201,6 +202,11 @@ class CameraAidlTest : public ::testing::TestWithParam<std::string> {
             int32_t* partialResultCount /*out*/, std::shared_ptr<DeviceCb>* outCb /*out*/,
             int32_t* jpegBufferSize /*out*/, bool* useHalBufManager /*out*/);
 
+    ndk::ScopedAStatus configureStreams(std::shared_ptr<ICameraDeviceSession>& session,
+                                        const StreamConfiguration& config,
+                                        bool sessionHalBufferManager, bool* useHalBufManager,
+                                        std::vector<HalStream>* halStreams);
+
     void configureStreams(
             const std::string& name, const std::shared_ptr<ICameraProvider>& provider,
             PixelFormat format, std::shared_ptr<ICameraDeviceSession>* session /*out*/,
@@ -278,6 +284,8 @@ class CameraAidlTest : public ::testing::TestWithParam<std::string> {
 
     static void verifyLogicalCameraResult(const camera_metadata_t* staticMetadata,
                                           const std::vector<uint8_t>& resultMetadata);
+
+    static void verifyLensIntrinsicsResult(const std::vector<uint8_t>& resultMetadata);
 
     static void verifyBuffersReturned(const std::shared_ptr<ICameraDeviceSession>& session,
                                       int32_t streamId, const std::shared_ptr<DeviceCb>& cb,
