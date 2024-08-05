@@ -52,10 +52,10 @@ HealthLoop::~HealthLoop() {
 int HealthLoop::RegisterEvent(int fd, BoundFunction func, EventWakeup wakeup) {
     CHECK(!reject_event_register_);
 
-    auto* event_handler =
-            event_handlers_
-                    .emplace_back(std::make_unique<EventHandler>(EventHandler{this, fd, func}))
-                    .get();
+    auto* event_handler = event_handlers_
+                                  .emplace_back(std::make_unique<EventHandler>(
+                                          EventHandler{this, fd, std::move(func)}))
+                                  .get();
 
     struct epoll_event ev;
 
