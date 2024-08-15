@@ -186,7 +186,7 @@ class ComposerClientReader {
     }
 
     // Get the lut(s) requested by hardware composer.
-    std::vector<Lut> takeLuts(int64_t display) {
+    std::vector<Lut> takeDisplayLuts(int64_t display) {
         LOG_ALWAYS_FATAL_IF(mDisplay && display != *mDisplay);
         auto found = mReturnData.find(display);
 
